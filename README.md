@@ -1,0 +1,5 @@
+# Laboratórios de Fundamentos de Computação Gráfica
+
+Esse repositório contém todos os laboratórios realizados no âmbito da disciplina INF01047 - Fundamentos de Computação Gráfica @ [INF](https://inf.ufrgs.br) - [UFRGS](https://ufrgs.br).
+
+Cada um dos laboratórios se encontra em uma pasta, com um README.MD explicando o intuito do laboratório
