@@ -84,7 +84,7 @@
 	<inttypes.h>
 	<stdint.h>
 
-1553814212 source:c:\users\rafae\onedrive\faculdade\rafael\2019-1\fundamentos de computação gráfica\laboratorio1\src\main.cpp
+1554337485 source:c:\users\rafae\onedrive\faculdade\rafael\2019-1\fundamentos de computação gráfica\laboratorio1\src\main.cpp
 	<cmath>
 	<cstdio>
 	<cstdlib>
@@ -92,6 +92,8 @@
 	<string>
 	<fstream>
 	<sstream>
+	<iostream>
+	<vector>
 	<glad/glad.h>
 	<GLFW/glfw3.h>
 	"utils.h"
