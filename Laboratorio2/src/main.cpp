@@ -111,7 +111,8 @@ bool g_LeftMouseButtonPressed = false;
 // renderização.
 float g_CameraTheta = 205.774f; // Ângulo no plano ZX em relação ao eixo Z. MAGIC. DO NOT TOUCH.
 float g_CameraPhi = 0.0f;   // Ângulo em relação ao eixo Y
-float g_CameraDistance = 2.5f; // Distância da câmera para a origem
+const float MAX_FOV = 3.141592 / 3.0f;
+float fov = MAX_FOV; // Distância da câmera para a origem
 
 // Variável que controla o tipo de projeção utilizada: perspectiva ou ortográfica.
 bool g_UsePerspectiveProjection = true;
@@ -308,8 +309,7 @@ int main()
         {
             // Projeção Perspectiva.
             // Para definição do field of view (FOV), veja slide 227 do documento "Aula_09_Projecoes.pdf".
-            float field_of_view = 3.141592 / 3.0f;
-            projection = Matrix_Perspective(field_of_view, g_ScreenRatio, nearplane, farplane);
+             projection = Matrix_Perspective(fov, g_ScreenRatio, nearplane, farplane);
         }
         else
         {
@@ -318,7 +318,7 @@ int main()
             // PARA PROJEÇÃO ORTOGRÁFICA veja slide 236 do documento "Aula_09_Projecoes.pdf".
             // Para simular um "zoom" ortográfico, computamos o valor de "t"
             // utilizando a variável g_CameraDistance.
-            float t = 1.5f*g_CameraDistance/2.5f;
+            float t = fov * 1.5f;
             float b = -t;
             float r = t*g_ScreenRatio;
             float l = -r;
@@ -1002,7 +1002,8 @@ void CursorPosCallback(GLFWwindow* window, double xpos, double ypos)
     // Atualiza o vetor de direção
     camera_front.x = cos(g_CameraTheta) * cos(g_CameraPhi);
     camera_front.y = sin(g_CameraPhi);
-    camera_front.z = sin(g_CameraTheta) * cos(g_CameraPhi) -1.0f;
+    camera_front.z = sin(g_CameraTheta) * cos(g_CameraPhi);
+    camera_front = normalize(camera_front);
 
     // Atualizamos as variáveis globais para armazenar a posição atual do
     // cursor como sendo a última posição conhecida do cursor.
@@ -1015,16 +1016,14 @@ void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
 {
     // Atualizamos a distância da câmera para a origem utilizando a
     // movimentação da "rodinha", simulando um ZOOM.
-    g_CameraDistance -= 0.1f*yoffset;
+    fov -= 0.1f*yoffset;
 
-    // Uma câmera look-at nunca pode estar exatamente "em cima" do ponto para
-    // onde ela está olhando, pois isto gera problemas de divisão por zero na
-    // definição do sistema de coordenadas da câmera. Isto é, a variável abaixo
-    // nunca pode ser zero. Versões anteriores deste código possuíam este bug,
-    // o qual foi detectado pelo aluno Vinicius Fraga (2017/2).
+    // Limitamos o fov entre 1.0f e 45.0f
     const float verysmallnumber = std::numeric_limits<float>::epsilon();
-    if (g_CameraDistance < verysmallnumber)
-        g_CameraDistance = verysmallnumber;
+    if (fov < verysmallnumber)
+        fov = verysmallnumber;
+    if (fov > MAX_FOV)
+        fov = MAX_FOV;
 }
 
 // Definição da função que será chamada sempre que o usuário pressionar alguma
