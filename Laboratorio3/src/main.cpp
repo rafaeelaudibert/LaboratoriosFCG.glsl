@@ -375,7 +375,7 @@ int main()
         PushMatrix(model);
             model = model * Matrix_Translate(0.0f, 0.02f, 0.0f); // Atualizamos matriz model
             model = model // Atualizamos matriz model (multiplicação à direita) com a rotação do braço direito
-                  * Matrix_Rotate_Z(0)  // TERCEIRO rotação Z de Euler
+                  * Matrix_Rotate_Z(g_AngleZ > 0.4f ? 0.4f : (g_AngleZ < -0.4f ? -0.4f : g_AngleZ))  // TERCEIRO rotação Z de Euler
                   * Matrix_Rotate_Y(-g_AngleY > 0.75f ? 0.75f : (-g_AngleY < -0.75f ? -0.75f : -g_AngleY))  // SEGUNDO rotação Y de Euler
                   * Matrix_Rotate_X(-g_AngleX > 0.75f ? 0.75f : (-g_AngleX < -0.4f ? -0.4f : -g_AngleX)); // PRIMEIRO rotação X de Euler
             model = model * Matrix_Scale(-0.3f, -0.3f, -0.3f); // Atualizamos matriz model (multiplicação à direita) com um escalamento do braço direito
@@ -424,7 +424,7 @@ int main()
             PushMatrix(model); // Guardamos matriz model atual na pilha
                 model = model // Atualizamos matriz model (multiplicação à direita) com a rotação do braço direito
                       * Matrix_Rotate_Z(-g_AngleZ)  // TERCEIRO rotação Z de Euler
-                      * Matrix_Rotate_Y(-g_AngleY)  // SEGUNDO rotação Y de Euler
+                      * Matrix_Rotate_Y(g_AngleY)  // SEGUNDO rotação Y de Euler
                       * Matrix_Rotate_X(g_AngleX); // PRIMEIRO rotação X de Euler
                 PushMatrix(model); // Guardamos matriz model atual na pilha
                     model = model * Matrix_Scale(0.2f, 0.6f, 0.2f); // Atualizamos matriz model (multiplicação à direita) com um escalamento do braço direito
