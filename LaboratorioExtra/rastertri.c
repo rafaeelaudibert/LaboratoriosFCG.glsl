@@ -1,33 +1,13 @@
 // Allowed libraries
-#include <stdio.h>
-#include <math.h>
+#include <stdio.h>  // printf
+#include <stdlib.h> // atoi
+#include <math.h>   // sqrt e pow
 
 // Helper functions, using define because of their one-liner nature
 #define MAX(a, b, c) (a > b ? (a > c ? a : c) : (b > c ? b : c))            // Maximum between 3 numbers
 #define DIST(ax, ay, bx, by) (sqrt(pow((ax - bx), 2) + pow((ay - by), 2)))  // Euclidean distance between 2 points
 #define EDGE_EQUATIONS(A, x, B, y, C) (A * x + B * y + C)                   // Edge equations
 #define GEQ(a, b, c, n) (a >= n && b >= n && c >= n)                        // Returns if 3 numbers are grater or equal than a number n
-
-// A simple atoi() function
-int atoi(char* str)
-{
-    int res = 0; // Initialize result
-    int sign = 1; // Initialize sign as positive
-    int i = 0; // Initialize index of first digit
-
-    // If number is negative, then update sign
-    if (str[0] == '-') {
-        sign = -1;
-        i++; // Also update index of first digit
-    }
-
-    // Iterate through all digits and update the result
-    for (; str[i] != '\0'; ++i)
-        res = res * 10 + str[i] - '0';
-
-    // Return result with sign
-    return sign * res;
-}
 
 int main(int argc, char* argv[]){
 
